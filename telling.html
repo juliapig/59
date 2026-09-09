@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telling | Julia Zhu</title>
+    <meta
+      name="description"
+      content="Telling is a reflective fortune and daily energy concept by Julia Zhu."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;500;700;800&family=Syne:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=34" />
+  </head>
+  <body class="telling-page">
+    <header class="site-header">
+      <a class="logo" href="index.html" aria-label="Julia Zhu home">JU.</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html#top">Home</a>
+        <a href="work.html"><i data-lucide="palette" aria-hidden="true"></i><span>Projects</span></a>
+        <a class="is-active" href="play.html"><i data-lucide="sparkles" aria-hidden="true"></i><span>Ideas</span></a>
+      </nav>
+    </header>
+
+    <main id="top" class="telling-main">
+      <a class="back-link" href="play.html"><i data-lucide="arrow-left" aria-hidden="true"></i><span>Back to Ideas</span></a>
+
+      <section class="telling-reading reveal" aria-labelledby="telling-title">
+        <header class="telling-heading">
+          <p class="kicker">01 / Telling</p>
+          <h1 id="telling-title">今日运势</h1>
+          <p>Take a quiet breath. Draw one card for the energy surrounding you today.</p>
+        </header>
+
+        <div class="tarot-stage" data-tarot-stage>
+          <div class="tarot-deck">
+            <div class="tarot-card" data-tarot-card aria-live="polite">
+            <div class="tarot-card-inner">
+              <div class="tarot-card-back" aria-hidden="true">
+                <span class="card-back-corner">✦</span>
+                <div class="card-back-orbit">
+                  <svg class="card-back-sigil" viewBox="0 0 120 120" aria-hidden="true">
+                    <defs>
+                      <path id="sigil-ray-pair" d="M60 31V40M60 80V89" />
+                    </defs>
+                    <circle cx="60" cy="60" r="54" />
+                    <path d="M60 13 102 86H18Z" />
+                    <path d="M60 107 18 34h84Z" />
+                    <circle class="sigil-core" cx="60" cy="60" r="16" />
+                    <g class="sigil-rays">
+                      <use href="#sigil-ray-pair" />
+                      <use href="#sigil-ray-pair" transform="rotate(15 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(30 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(45 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(60 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(75 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(90 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(105 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(120 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(135 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(150 60 60)" />
+                      <use href="#sigil-ray-pair" transform="rotate(165 60 60)" />
+                    </g>
+                  </svg>
+                </div>
+                <span class="card-back-label">今日运势</span>
+              </div>
+              <div class="tarot-card-face">
+                <span class="card-roman" data-card-roman>0</span>
+                <span class="card-symbol" data-card-symbol>✦</span>
+                <div class="card-name">
+                  <strong data-card-chinese>愚者</strong>
+                  <span data-card-english>The Fool</span>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <button class="draw-button" type="button" data-draw-button>
+              <span class="draw-button-shape" aria-hidden="true"></span>
+              <span class="draw-button-label">Draw</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="reading-result" data-reading-result hidden>
+          <p class="kicker">Your card</p>
+          <h2><span data-result-chinese></span> <small data-result-english></small></h2>
+          <p class="card-orientation" data-result-orientation></p>
+          <p data-result-reading></p>
+          <div class="alternate-reading" data-alternate-reading>
+            <button
+              class="alternate-reading-trigger"
+              type="button"
+              aria-describedby="alternate-reading-tooltip"
+              aria-expanded="false"
+              data-alternate-reading-trigger
+            ></button>
+            <div class="alternate-reading-tooltip" id="alternate-reading-tooltip" role="tooltip" data-alternate-reading-tooltip></div>
+          </div>
+          <button class="draw-again" type="button" data-draw-again>Draw again</button>
+        </div>
+      </section>
+
+      <p class="telling-closing reveal">More to come...</p>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Julia. Crafted with care.</p>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="script.js?v=11"></script>
+  </body>
+</html>
