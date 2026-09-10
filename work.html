@@ -14,9 +14,9 @@
       href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;500;700;800&family=Syne:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=23" />
+    <link rel="stylesheet" href="styles.css?v=36" />
   </head>
-  <body class="work-page">
+  <body class="work-page work-locked">
     <header class="site-header">
       <a class="logo" href="index.html" aria-label="Julia Zhu home">JU.</a>
       <nav class="nav" aria-label="Primary navigation">
@@ -27,10 +27,35 @@
     </header>
 
     <main id="top" class="work-main">
+      <section class="project-gate" aria-labelledby="project-gate-title" data-project-gate>
+        <div class="project-gate-inner">
+          <p class="kicker">Private portfolio</p>
+          <h1 id="project-gate-title">Enter password</h1>
+          <p>These selected projects are currently shared by invitation.</p>
+          <form class="project-gate-form" data-project-gate-form>
+            <label for="project-password">Password</label>
+            <div class="project-password-entry">
+              <input
+                id="project-password"
+                name="password"
+                type="password"
+                inputmode="numeric"
+                autocomplete="current-password"
+                maxlength="4"
+                required
+                data-project-password
+              />
+              <button type="submit">Enter</button>
+            </div>
+            <p class="project-gate-error" role="alert" hidden data-project-gate-error>That password is incorrect.</p>
+          </form>
+        </div>
+      </section>
+
       <section class="selected-projects" aria-labelledby="selected-projects-title">
         <header class="page-heading reveal">
           <p class="kicker">Portfolio / 2021&ndash;2026</p>
-          <h1 id="selected-projects-title">Selected projects</h1>
+          <h1 id="selected-projects-title" tabindex="-1">Selected projects</h1>
         </header>
 
         <div class="project-list">
@@ -122,6 +147,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=12"></script>
   </body>
 </html>

@@ -27,6 +27,75 @@ window.addEventListener('load', () => {
   target?.scrollIntoView({ block: 'start' });
 });
 
+const tellingTabs = [...document.querySelectorAll('[data-telling-tab]')];
+
+if (tellingTabs.length) {
+  const activateTellingTab = (activeTab, moveFocus = true) => {
+    tellingTabs.forEach((tab) => {
+      const isActive = tab === activeTab;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+      document.querySelector(`#${tab.getAttribute('aria-controls')}`).hidden = !isActive;
+    });
+
+    if (moveFocus) activeTab.focus();
+  };
+
+  tellingTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateTellingTab(tab, false));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+
+      event.preventDefault();
+      const nextIndex = event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+          ? tellingTabs.length - 1
+          : (index + (event.key === 'ArrowRight' ? 1 : -1) + tellingTabs.length) % tellingTabs.length;
+      activateTellingTab(tellingTabs[nextIndex]);
+    });
+  });
+}
+
+const projectGate = document.querySelector('[data-project-gate]');
+
+if (projectGate) {
+  const projectGateForm = projectGate.querySelector('[data-project-gate-form]');
+  const projectPassword = projectGate.querySelector('[data-project-password]');
+  const projectGateError = projectGate.querySelector('[data-project-gate-error]');
+  const accessKey = 'julia-projects-access';
+
+  const unlockProjects = () => {
+    document.body.classList.remove('work-locked');
+    projectGate.setAttribute('aria-hidden', 'true');
+    document.querySelector('#selected-projects-title')?.focus({ preventScroll: true });
+  };
+
+  if (sessionStorage.getItem(accessKey) === 'granted') {
+    unlockProjects();
+  } else {
+    projectPassword.focus();
+  }
+
+  projectGateForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if (projectPassword.value === '0509') {
+      sessionStorage.setItem(accessKey, 'granted');
+      projectGateError.hidden = true;
+      projectPassword.removeAttribute('aria-invalid');
+      unlockProjects();
+      return;
+    }
+
+    projectGateError.hidden = false;
+    projectPassword.value = '';
+    projectPassword.setAttribute('aria-invalid', 'true');
+    projectPassword.focus();
+  });
+}
+
 const tarotCards = [
   { roman: '0', english: 'The Fool', chinese: '愚者', symbol: '✦', upright: 'Begin lightly. Curiosity will take you farther than certainty today.', reversed: 'Pause before leaping. Freedom needs awareness to avoid becoming carelessness.' },
   { roman: 'I', english: 'The Magician', chinese: '魔术师', symbol: '☯', upright: 'Your tools are already in hand. Give one clear intention your full attention.', reversed: 'Your energy is scattered or misdirected. Return to an honest intention before acting.' },
@@ -138,4 +207,109 @@ if (tarotStage) {
       drawButton.focus();
     }, flipDuration);
   });
+}
+
+const threeCardReading = document.querySelector('[data-three-card-reading]');
+
+if (threeCardReading) {
+  const positions = ['Past', 'Present', 'Future'];
+  const spreadDeck = threeCardReading.querySelector('[data-spread-deck]');
+  const spreadStatus = threeCardReading.querySelector('[data-three-card-status]');
+  const threeCardPrompt = threeCardReading.querySelector('[data-three-card-prompt]');
+  const spreadReveal = threeCardReading.querySelector('[data-spread-reveal]');
+  const spreadResult = threeCardReading.querySelector('[data-spread-result]');
+  const spreadResultGrid = threeCardReading.querySelector('[data-spread-result-grid]');
+  const spreadReset = threeCardReading.querySelector('[data-spread-reset]');
+  const readingQuestion = threeCardReading.querySelector('[data-reading-question]');
+  const questionEcho = threeCardReading.querySelector('[data-spread-question-echo]');
+  let selectedCards = [];
+
+  const deckCards = [...tarotCards]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 12);
+
+  deckCards.forEach((card, index) => {
+    const button = document.createElement('button');
+    button.className = 'spread-card';
+    button.type = 'button';
+    button.dataset.cardIndex = String(index);
+    button.setAttribute('aria-label', `Choose card ${index + 1}`);
+    button.setAttribute('aria-pressed', 'false');
+    button.style.setProperty('--card-index', String(index));
+    spreadDeck.append(button);
+  });
+
+  const updateSpreadSelection = () => {
+    const remaining = 3 - selectedCards.length;
+    spreadStatus.textContent = remaining === 0 ? 'Your three cards are ready' : `Choose ${remaining} more card${remaining === 1 ? '' : 's'}`;
+    threeCardPrompt.hidden = selectedCards.length !== 3;
+    spreadDeck.querySelectorAll('.spread-card').forEach((button) => {
+      button.disabled = selectedCards.length === 3 && button.getAttribute('aria-pressed') !== 'true';
+    });
+  };
+
+  spreadDeck.addEventListener('click', (event) => {
+    const button = event.target.closest('.spread-card');
+    if (!button) return;
+
+    const cardIndex = Number(button.dataset.cardIndex);
+    const selectedIndex = selectedCards.indexOf(cardIndex);
+    if (selectedIndex >= 0) {
+      selectedCards.splice(selectedIndex, 1);
+      button.setAttribute('aria-pressed', 'false');
+    } else if (selectedCards.length < 3) {
+      selectedCards.push(cardIndex);
+      button.setAttribute('aria-pressed', 'true');
+    }
+
+    updateSpreadSelection();
+  });
+
+  spreadReveal.addEventListener('click', () => {
+    if (selectedCards.length !== 3) return;
+
+    const question = readingQuestion.value.trim();
+    questionEcho.textContent = question ? `“${question}”` : '';
+    questionEcho.hidden = !question;
+    spreadResultGrid.replaceChildren();
+
+    selectedCards.forEach((cardIndex, index) => {
+      const card = deckCards[cardIndex];
+      const isReversed = Math.random() < 0.5;
+      const resultCard = document.createElement('article');
+      resultCard.className = `spread-result-item spread-result-item-${index + 1}`;
+      resultCard.innerHTML = `
+        <p class="spread-result-position">${positions[index]}</p>
+        <div class="spread-result-card${isReversed ? ' is-reversed' : ''}" role="group" aria-label="${card.english}, ${isReversed ? 'reversed' : 'upright'}">
+          <span class="spread-result-roman">${card.roman}</span>
+          <div class="spread-result-art" aria-hidden="true"><span>${card.symbol}</span></div>
+          <h3>${card.chinese}<span>${card.english}</span></h3>
+        </div>
+        <p class="spread-result-orientation">${isReversed ? 'Reversed' : 'Upright'}</p>
+        <p class="spread-result-meaning">${isReversed ? card.reversed : card.upright}</p>
+      `;
+      spreadResultGrid.append(resultCard);
+    });
+
+    threeCardReading.querySelector('[data-three-card-picker]').hidden = true;
+    spreadResult.hidden = false;
+    spreadResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    spreadReset.focus({ preventScroll: true });
+  });
+
+  spreadReset.addEventListener('click', () => {
+    selectedCards = [];
+    spreadDeck.querySelectorAll('.spread-card').forEach((button) => {
+      button.disabled = false;
+      button.setAttribute('aria-pressed', 'false');
+    });
+    spreadResult.hidden = true;
+    threeCardReading.querySelector('[data-three-card-picker]').hidden = false;
+    threeCardPrompt.hidden = true;
+    readingQuestion.value = '';
+    updateSpreadSelection();
+    spreadDeck.querySelector('.spread-card')?.focus();
+  });
+
+  updateSpreadSelection();
 }

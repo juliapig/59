@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;500;700;800&family=Syne:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=34" />
+    <link rel="stylesheet" href="styles.css?v=53" />
   </head>
   <body class="telling-page">
     <header class="site-header">
@@ -29,9 +29,36 @@
     <main id="top" class="telling-main">
       <a class="back-link" href="play.html"><i data-lucide="arrow-left" aria-hidden="true"></i><span>Back to Ideas</span></a>
 
-      <section class="telling-reading reveal" aria-labelledby="telling-title">
+      <div class="telling-tabs" role="tablist" aria-label="Telling experiences">
+        <button
+          id="daily-telling-tab"
+          class="telling-tab is-active"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="daily-telling-panel"
+          data-telling-tab
+        >Daily telling</button>
+        <button
+          id="three-card-tab"
+          class="telling-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="three-card-panel"
+          tabindex="-1"
+          data-telling-tab
+        >Three-card reading</button>
+      </div>
+
+      <section
+        id="daily-telling-panel"
+        class="telling-reading telling-panel reveal"
+        role="tabpanel"
+        aria-labelledby="daily-telling-tab telling-title"
+        tabindex="0"
+      >
         <header class="telling-heading">
-          <p class="kicker">01 / Telling</p>
           <h1 id="telling-title">今日运势</h1>
           <p>Take a quiet breath. Draw one card for the energy surrounding you today.</p>
         </header>
@@ -106,7 +133,39 @@
         </div>
       </section>
 
-      <p class="telling-closing reveal">More to come...</p>
+      <section
+        id="three-card-panel"
+        class="three-card-reading telling-panel reveal"
+        role="tabpanel"
+        aria-labelledby="three-card-tab three-card-title"
+        tabindex="0"
+        hidden
+        data-three-card-reading
+      >
+        <header class="three-card-header">
+          <h2 id="three-card-title">三世之镜</h2>
+          <p>Hold a question in mind, then choose three cards for a wider view of what shaped you, what surrounds you, and what may be unfolding.</p>
+        </header>
+
+        <div class="three-card-picker" data-three-card-picker>
+          <p class="three-card-status" aria-live="polite" data-three-card-status>Choose 3 cards</p>
+          <div class="spread-deck" aria-label="Choose three tarot cards" data-spread-deck></div>
+
+          <div class="three-card-prompt" hidden data-three-card-prompt>
+            <div class="three-card-question">
+              <label for="reading-question">Ask any question</label>
+              <textarea id="reading-question" maxlength="240" rows="4" placeholder="Ask your question..." data-reading-question></textarea>
+            </div>
+            <button class="spread-reveal-button" type="button" data-spread-reveal>Get your reading</button>
+          </div>
+        </div>
+
+        <div class="spread-result" hidden data-spread-result>
+          <p class="spread-question-echo" hidden data-spread-question-echo></p>
+          <div class="spread-result-grid" data-spread-result-grid></div>
+          <button class="spread-reset" type="button" data-spread-reset>Choose again</button>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -114,6 +173,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-    <script src="script.js?v=11"></script>
+    <script src="script.js?v=17"></script>
   </body>
 </html>

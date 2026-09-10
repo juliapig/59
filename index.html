@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Manrope:wght@400;500;700;800&family=Syne:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=23" />
+    <link rel="stylesheet" href="styles.css?v=27" />
   </head>
   <body>
     <div class="bg-orb orb-a"></div>
@@ -38,8 +38,8 @@
             and turning complex challenges into elegant, impactful solutions.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-solid" href="work.html">View Projects</a>
-            <a class="btn btn-ghost" href="#contact">Start a Project</a>
+            <a class="btn btn-solid" href="work.html">View projects</a>
+            <a class="btn btn-ghost" href="play.html">View ideas</a>
           </div>
         </div>
         <div class="hero-media">
@@ -47,7 +47,85 @@
         </div>
       </section>
 
-      <section id="about" class="about reveal">
+      <section class="home-telling reveal" aria-labelledby="home-telling-title">
+        <div class="home-telling-inner telling-reading">
+          <header class="telling-heading">
+            <h2 id="home-telling-title">今日运势</h2>
+            <p>Take a quiet breath. Draw one card for the energy surrounding you today.</p>
+          </header>
+
+          <div class="tarot-stage" data-tarot-stage>
+            <div class="tarot-deck">
+              <div class="tarot-card" data-tarot-card aria-live="polite">
+                <div class="tarot-card-inner">
+                  <div class="tarot-card-back" aria-hidden="true">
+                    <span class="card-back-corner">✦</span>
+                    <div class="card-back-orbit">
+                      <svg class="card-back-sigil" viewBox="0 0 120 120" aria-hidden="true">
+                        <defs>
+                          <path id="home-sigil-ray-pair" d="M60 31V40M60 80V89" />
+                        </defs>
+                        <circle cx="60" cy="60" r="54" />
+                        <path d="M60 13 102 86H18Z" />
+                        <path d="M60 107 18 34h84Z" />
+                        <circle class="sigil-core" cx="60" cy="60" r="16" />
+                        <g class="sigil-rays">
+                          <use href="#home-sigil-ray-pair" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(15 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(30 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(45 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(60 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(75 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(90 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(105 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(120 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(135 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(150 60 60)" />
+                          <use href="#home-sigil-ray-pair" transform="rotate(165 60 60)" />
+                        </g>
+                      </svg>
+                    </div>
+                    <span class="card-back-label">今日运势</span>
+                  </div>
+                  <div class="tarot-card-face">
+                    <span class="card-roman" data-card-roman>0</span>
+                    <span class="card-symbol" data-card-symbol>✦</span>
+                    <div class="card-name">
+                      <strong data-card-chinese>愚者</strong>
+                      <span data-card-english>The Fool</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="draw-button" type="button" data-draw-button>
+                <span class="draw-button-shape" aria-hidden="true"></span>
+                <span class="draw-button-label">Draw</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="reading-result" data-reading-result hidden>
+            <p class="kicker">Your card</p>
+            <h2><span data-result-chinese></span> <small data-result-english></small></h2>
+            <p class="card-orientation" data-result-orientation></p>
+            <p data-result-reading></p>
+            <div class="alternate-reading" data-alternate-reading>
+              <button
+                class="alternate-reading-trigger"
+                type="button"
+                aria-describedby="home-alternate-reading-tooltip"
+                aria-expanded="false"
+                data-alternate-reading-trigger
+              ></button>
+              <div class="alternate-reading-tooltip" id="home-alternate-reading-tooltip" role="tooltip" data-alternate-reading-tooltip></div>
+            </div>
+            <button class="draw-again" type="button" data-draw-again>Draw again</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about reveal" hidden>
         <div class="section-head">
           <p class="kicker">About</p>
           <h2>Design with Personality</h2>
@@ -56,40 +134,15 @@
           My approach balances systems thinking with expressive visual language. I collaborate with
           founders, creative teams, and product groups to shape experiences people remember.
         </p>
+        <div class="about-badges" aria-label="Professional experience">
+          <img src="assets/salesforce-badge.png" alt="Salesforce UX Design, 1.2 years" loading="lazy" decoding="async" />
+          <img src="assets/microsoft-badge.png" alt="Microsoft Product Design, 7 years" loading="lazy" decoding="async" />
+        </div>
         <ul class="stats">
           <li><strong>6+</strong><span>Years in design</span></li>
           <li><strong>40+</strong><span>Projects delivered</span></li>
           <li><strong>12</strong><span>Global clients</span></li>
         </ul>
-      </section>
-
-      <section id="work" class="work reveal">
-        <div class="section-head">
-          <p class="kicker">Selected Work</p>
-          <h2>Recent Projects</h2>
-        </div>
-        <div class="work-grid">
-          <article class="card">
-            <div class="card-tag">Brand + Web</div>
-            <h3>Northline Studio</h3>
-            <p>Visual identity and landing site for a boutique architecture practice.</p>
-          </article>
-          <article class="card">
-            <div class="card-tag">Product Design</div>
-            <h3>Flowstate App</h3>
-            <p>End-to-end UX for a wellness platform, from concept to interface system.</p>
-          </article>
-          <article class="card">
-            <div class="card-tag">Campaign</div>
-            <h3>Earth Tone 24</h3>
-            <p>Digital campaign assets and social art direction for a sustainability summit.</p>
-          </article>
-          <article class="card">
-            <div class="card-tag">Editorial</div>
-            <h3>Field Notes Vol. 3</h3>
-            <p>Editorial website and interactive stories for an independent culture magazine.</p>
-          </article>
-        </div>
       </section>
 
       <section id="contact" class="contact reveal">
@@ -110,6 +163,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=17"></script>
   </body>
 </html>
